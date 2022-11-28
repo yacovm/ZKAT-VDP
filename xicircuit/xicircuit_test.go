@@ -4,6 +4,7 @@ import (
 	"blockchain_DP/hashfunctions"
 	crand "crypto/rand"
 	"fmt"
+	"sort"
 	"testing"
 	"time"
 
@@ -188,6 +189,15 @@ func setUpInputOutput(t *testing.T, numInputs int) InputOutput {
 		assert.NoError(err)
 		vals.Omega[i].Set(&temp)
 	}
+
+	// Sort Omega in ascending order
+	sort.Slice(vals.Omega, func(i, j int) bool {
+		if vals.Omega[i].Cmp(&vals.Omega[j]) <= 0 {
+			return true
+		} else {
+			return false
+		}
+	})
 
 	vals.AskList = make([]fr.Element, numInputs)
 	for i := 0; i < numInputs; i++ {

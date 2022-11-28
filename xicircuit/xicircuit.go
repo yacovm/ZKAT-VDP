@@ -53,6 +53,10 @@ func (circuit *xiCircuit) Define(api frontend.API) error {
 		return err
 	}
 
+	for i := 0; i < len(circuit.Omega)-1; i++ {
+		api.AssertIsLessOrEqual(circuit.Omega[i], circuit.Omega[i+1])
+	}
+
 	for i := 0; i < len(circuit.Omega); i++ {
 		err := PRFSNOld(api, circuit.SNOldList[i], circuit.AskList[i], circuit.Omega[i])
 		if err != nil {
